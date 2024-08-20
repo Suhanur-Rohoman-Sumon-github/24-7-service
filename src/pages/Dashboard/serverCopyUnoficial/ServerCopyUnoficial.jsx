@@ -10,12 +10,8 @@ import useAprovedPayments from "../../../hooks/useAprovedPayment";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useContexts from "../../../hooks/useContexts";
-import QRCode from "qrcode";
-const ServerCopyUnoficial = () => {
-  let qrName = data?.data?.data.nameEn;
-  let qrDob = data?.data?.data?.dateOfBirth;
-  const [qrImage, setQrImage] = useState(null);
 
+const ServerCopyUnoficial = () => {
   const { refetch, payments } = useAprovedPayments();
   const [error, setError] = useState("");
   const { user } = useContexts();
