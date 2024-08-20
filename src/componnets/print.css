@@ -1,0 +1,22 @@
+@media print {
+  #print {
+    background: #03a9f4;
+    padding: 8px;
+    width: 700px;
+    height: 40px;
+    border: 0;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 1px 4px 4px #878787;
+    color: #fff;
+    border-radius: 10px;
+    margin: 20px;
+    /* This button will not be displayed when printing */
+  }
+
+  #present_addr,
+  #permanent_addr {
+    text-align: left;
+  }
+}
