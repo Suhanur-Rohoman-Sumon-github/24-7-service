@@ -5,14 +5,29 @@ import "./styels.css";
 import "./print.css";
 import cbimage from "../assets/last bg server copy.jpg";
 import axios from "axios";
+import QRCode from "qrcode";
 const Nid = () => {
-  const [isReady, setIsReady] = useState(false);
+  const [qrImage, setQrImage] = useState(null);
   const [imge, setImage] = useState();
-  console.log(imge);
+  console.log(qrImage);
   const location = useLocation();
   const { firstData, secondData } = location.state || {};
-  console.log(secondData.data);
+  console.log(firstData);
+  let qrName = firstData.data.nameEnglish;
+  let qrDob = firstData.data?.dateOfBirth;
+  let nationalIds = firstData.data?.nationalId;
 
+  // With async/await
+  const generateQR = async (text) => {
+    try {
+      let res = await QRCode.toDataURL(text);
+      setQrImage(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  generateQR(`${qrName} ${nationalIds} ${qrDob} `);
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
@@ -20,10 +35,8 @@ const Nid = () => {
     documentTitle: firstData.data.nameEnglish,
   });
   useEffect(() => {
-    if (isReady) {
-      handlePrint();
-    }
-  }, [isReady, handlePrint]);
+    handlePrint();
+  }, [handlePrint]);
 
   const {
     nameBangla,
@@ -68,7 +81,6 @@ const Nid = () => {
         const imageBlob = response.data;
         const imageObjectURL = URL.createObjectURL(imageBlob);
         setImage(imageObjectURL);
-        setIsReady(true);
       } catch (error) {
         console.error("Error fetching the image:", error);
       }
@@ -83,9 +95,9 @@ const Nid = () => {
   return (
     <div>
       <div ref={componentRef} className="relative ">
-        <div className="relative w-[1070px] h-[1500px] mx-auto bg-gray-200">
+        <div className="relative w-[1070px] h-[1300px] mx-auto bg-gray-200">
           <img
-            className="absolute inset-0 w-full h-full object-cover "
+            className="absolute inset-0 w-full h-full  "
             src="https://servarcopyhd.xyz/images/cbimagex1.png"
             alt="Background"
           />
@@ -108,10 +120,10 @@ const Nid = () => {
           <div className="absolute left-[45%] top-[16.9%] text-[12px] text-gray-600">
             NID
           </div>
-          <div className="absolute left-[63.7%] top-[17.3%] text-[11px] text-white">
+          <div className="absolute left-[63.7%] top-[17%] text-[11px] text-white">
             Submit
           </div>
-          <div className="absolute left-[89.6%] top-[11.75%] text-[11px] text-white">
+          <div className="absolute left-[89.6%] top-[11.50%] text-[11px] text-white">
             Home
           </div>
 
@@ -258,7 +270,7 @@ const Nid = () => {
           </div>
           <div
             id="blood_grp"
-            className="absolute left-[55%] top-[70.5%] text-[18px] text-red-500"
+            className="absolute left-[55%] top-[70.5%] text-[18px] "
           >
             {voterAreaCode}
           </div>
@@ -307,12 +319,24 @@ const Nid = () => {
             সাথে সরাসরি সম্পর্কযুক্ত নয়।
           </div>
 
-          <div className="absolute left-[19%] top-[25.7%] text-[12px] text-black">
+          <div className="absolute left-[22%] top-[25.7%] text-[12px] text-black">
             <img
               id="photo"
               src={secondData.data.photo}
               alt="User"
-              className="w-[160px] h-[160px]"
+              className="w-[100px] h-[100px] inset-1 rounded-md ml-3"
+            />
+            <p className="text-center my-3 text-[18px] font-semibold">
+              {nameEnglish}
+            </p>
+            <img
+              className="mx-auto mt-[-7px]"
+              id="photo"
+              src={qrImage}
+              height="125px"
+              width="125px"
+              style={{ borderRadius: "10px" }}
+              alt="Profile"
             />
           </div>
         </div>
