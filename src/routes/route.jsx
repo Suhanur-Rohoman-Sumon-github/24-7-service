@@ -26,10 +26,7 @@ const router = createBrowserRouter([
         path: "/dashboard/create-nid",
         element: <CreateNid />,
       },
-      {
-        path: "/dashboard/server-copy",
-        element: <Nid />,
-      },
+
       {
         path: "/dashboard/add-balance",
         element: <AddBalance />,
@@ -47,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/create-nid-download",
     element: <CreateNids />,
+  },
+  {
+    path: "/server-copy",
+    element: <Nid />,
   },
 ]);
 

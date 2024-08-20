@@ -37,9 +37,9 @@ const ServerCopyUnoficial = () => {
       );
       console.log(response.data);
       if (response.data.success === true) {
-        navigate("/dashboard/server-copy", {
+        navigate("/server-copy", {
           state: {
-            firstData: response.data.data.firstApiData,
+            firstData: response.data.data,
             secondData: response.data.data.secondApiData,
           },
         });

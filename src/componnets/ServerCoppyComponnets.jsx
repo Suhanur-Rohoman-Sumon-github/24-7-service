@@ -3,16 +3,15 @@ import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import "./styels.css";
 import "./print.css";
-import cbimage from "../assets/last bg server copy.jpg";
+import cbimage from "../assets/server cpy png.png";
 import axios from "axios";
 const Nid = () => {
   const [isReady, setIsReady] = useState(false);
   const [imge, setImage] = useState();
   console.log(imge);
   const location = useLocation();
-  const { firstData, secondData } = location.state || {};
-  console.log(secondData.data);
-
+  const { firstData } = location.state || {};
+  console.log(firstData);
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
@@ -20,9 +19,7 @@ const Nid = () => {
     documentTitle: firstData.data.nameEnglish,
   });
   useEffect(() => {
-    if (isReady) {
-      handlePrint();
-    }
+    handlePrint();
   }, [isReady, handlePrint]);
 
   const {
@@ -82,11 +79,14 @@ const Nid = () => {
   }
   return (
     <div>
-      <div ref={componentRef} className="relative ">
-        <div className="relative w-[1070px] h-[1500px] mx-auto bg-gray-200">
+      <div className="">
+        <div
+          ref={componentRef}
+          className="relative w-[1070px] h-[1500px] mx-auto bg-gray-200"
+        >
           <img
-            className="absolute inset-0 w-full h-full object-cover "
-            src="https://servarcopyhd.xyz/images/cbimagex1.png"
+            className="absolute inset-0 w-full h-full "
+            src={cbimage}
             alt="Background"
           />
 
@@ -240,7 +240,7 @@ const Nid = () => {
             id="gender"
             className="absolute left-[55%] top-[65%] text-[18px] text-black"
           >
-            {secondData.data.gender}
+            {/* {secondData.data.gender} */ ""}
           </div>
 
           <div className="absolute left-[37%] top-[67.7%] text-[18px] text-black">
@@ -250,7 +250,7 @@ const Nid = () => {
             id="mobile_no"
             className="absolute left-[55%] top-[67.7%] text-[16px] text-black"
           >
-            {secondData.data.religion}
+            {/* {secondData.data.religion} */ ""}
           </div>
 
           <div className="absolute left-[37%] top-[70.5%] text-[18px] text-black">
@@ -310,7 +310,7 @@ const Nid = () => {
           <div className="absolute left-[19%] top-[25.7%] text-[12px] text-black">
             <img
               id="photo"
-              src={secondData.data.photo}
+              // src={secondData.data.photo}
               alt="User"
               className="w-[160px] h-[160px]"
             />
