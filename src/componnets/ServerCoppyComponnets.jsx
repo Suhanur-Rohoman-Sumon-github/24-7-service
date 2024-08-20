@@ -12,10 +12,10 @@ const Nid = () => {
   console.log(qrImage);
   const location = useLocation();
   const { firstData, secondData } = location.state || {};
-  console.log(firstData);
-  let qrName = firstData.data.nameEnglish;
-  let qrDob = firstData.data?.dateOfBirth;
-  let nationalIds = firstData.data?.nationalId;
+
+  let qrName = firstData?.data?.nameEnglish;
+  let qrDob = firstData?.data?.dateOfBirth;
+  let nationalIds = firstData?.data?.nationalId;
 
   // With async/await
   const generateQR = async (text) => {
