@@ -32,7 +32,7 @@ const ServerCopyUnoficial = () => {
 
     const fetchData = async () => {
       const response = await axios.post(
-        `http://localhost:3000/api/v1/getServerCopy`,
+        `https://telent-finder.vercel.app/api/v1/getServerCopy`,
         { nid: nidNo, dob }
       );
       console.log(response.data);
