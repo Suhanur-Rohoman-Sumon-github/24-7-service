@@ -11,9 +11,9 @@ const Nid = () => {
   const [imge, setImage] = useState();
   console.log(qrImage);
   const location = useLocation();
-  const { firstData, secondData } = location.state || {};
-
-  let qrName = firstData?.data?.nameEnglish;
+  const { firstData } = location.state || {};
+  console.log(firstData?.data);
+  let qrName = firstData?.data?.nameEn;
   let qrDob = firstData?.data?.dateOfBirth;
   let nationalIds = firstData?.data?.nationalId;
 
@@ -32,40 +32,29 @@ const Nid = () => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: firstData.data.nameEnglish,
+    documentTitle: firstData.data.nameEn,
   });
   useEffect(() => {
     handlePrint();
   }, [handlePrint]);
 
   const {
-    nameBangla,
-    nameEnglish,
-    fatherName,
-    motherName,
+    name,
+    nameEn,
+    father,
+    mother,
     nationalId,
     dateOfBirth,
     pin,
-    voter_no,
-    PlaceOfBirth,
-    Religion,
+    voter_sl_no,
+    religion,
+
     gender,
-    voterAreaCode,
-    sl_no,
-    permanentHomeOrHoldingNo,
-    permanentAdditionalVillageOrRoad,
-    permanentPostOffice,
-    permanentUpozila,
-    permanentDistrict,
-    permanentDivision,
-    presentHomeOrHoldingNo,
-    presentAdditionalVillageOrRoad,
-    presentPostOffice,
-    presentDivision,
-    presentDistrict,
-    presentUpozila,
-    // presentAddr,
+    presentAddress,
+    photo,
+    permanentAddress,
   } = firstData.data;
+
   // const { division, district, upazila, union, village, postcode, area } =
   //   presentAddr;
 
@@ -73,7 +62,7 @@ const Nid = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/api/qr/?data=${nameEnglish}+${voter_no}+${dateOfBirth}`,
+          `/api/qr/?data=${nameEn}+${voter_sl_no}+${dateOfBirth}`,
           {
             responseType: "blob",
           }
@@ -88,7 +77,10 @@ const Nid = () => {
     if (firstData.data) {
       fetchData();
     }
-  }, [firstData.data, dateOfBirth, voter_no, nameEnglish]);
+  }, [firstData.data, dateOfBirth, voter_sl_no, nameEn]);
+  if (!firstData.data) {
+    return <div>No data found.</div>;
+  }
   if (!firstData.data) {
     return <div>No data found.</div>;
   }
@@ -157,7 +149,7 @@ const Nid = () => {
             id="nid_mother"
             className="absolute left-[55%] top-[35.4%] text-[18px] text-black"
           >
-            {voter_no}
+            {nationalId}
           </div>
 
           <div className="absolute left-[37%] top-[38%] text-[18px] text-black">
@@ -167,7 +159,7 @@ const Nid = () => {
             id="spouse"
             className="absolute left-[55%] top-[38%] text-[16px] text-black"
           >
-            {sl_no}
+            {""}
           </div>
 
           <div className="absolute left-[37%] top-[40.5%] text-[18px] text-black">
@@ -177,7 +169,7 @@ const Nid = () => {
             id="voter_area"
             className="absolute left-[55%] top-[40.5%] text-[18px] text-black"
           >
-            {permanentAdditionalVillageOrRoad}
+            {permanentAddress?.division}
           </div>
 
           <div className="absolute left-[37%] top-[43.5%] text-[18px] text-black font-bold">
@@ -190,7 +182,7 @@ const Nid = () => {
             id="name_bn"
             className="absolute font-bold left-[55%] top-[46%] text-[18px] text-black"
           >
-            {nameBangla}
+            {name}
           </div>
           <div className="absolute left-[37%] top-[48.5%] text-[18px] text-black">
             নাম (ইংরেজি)
@@ -199,7 +191,7 @@ const Nid = () => {
             id="name_en"
             className="absolute left-[55%] top-[48.5%] text-[16px] text-black"
           >
-            {nameEnglish}
+            {nameEn}
           </div>
           <div className="absolute left-[37%] top-[51.2%] text-[18px] text-black">
             জন্ম তারিখ
@@ -218,7 +210,7 @@ const Nid = () => {
             id="fathers_name"
             className="absolute left-[55%] top-[53.8%] text-[18px] text-black"
           >
-            {fatherName}
+            {father}
           </div>
 
           <div className="absolute left-[37%] top-[56.5%] text-[18px] text-black">
@@ -228,7 +220,7 @@ const Nid = () => {
             id="mothers_name"
             className="absolute left-[55%] top-[56.5%] text-[18px] text-black"
           >
-            {motherName}
+            {mother}
           </div>
 
           <div className="absolute left-[37%] top-[59.5%] text-[18px] text-black">
@@ -252,7 +244,7 @@ const Nid = () => {
             id="gender"
             className="absolute left-[55%] top-[65%] text-[18px] text-black"
           >
-            {secondData.data.gender}
+            {gender}
           </div>
 
           <div className="absolute left-[37%] top-[67.7%] text-[18px] text-black">
@@ -262,7 +254,7 @@ const Nid = () => {
             id="mobile_no"
             className="absolute left-[55%] top-[67.7%] text-[16px] text-black"
           >
-            {secondData.data.religion}
+            {religion}
           </div>
 
           <div className="absolute left-[37%] top-[70.5%] text-[18px] text-black">
@@ -272,7 +264,7 @@ const Nid = () => {
             id="blood_grp"
             className="absolute left-[55%] top-[70.5%] text-[18px] "
           >
-            {voterAreaCode}
+            {""}
           </div>
 
           <div className="absolute left-[37%] top-[72.9%] text-[18px] text-black">
@@ -282,7 +274,7 @@ const Nid = () => {
             id="birth_place"
             className="absolute left-[55%] top-[72.9%] text-[18px] text-black"
           >
-            {PlaceOfBirth}
+            {permanentAddress.district}
           </div>
 
           <div className="absolute left-[37%] top-[75.9%] text-[18px] text-black font-bold">
@@ -292,10 +284,7 @@ const Nid = () => {
             id="present_addr"
             className="absolute left-[37%] top-[78.1%] w-[48%] text-[16px] text-black"
           >
-            {`বাসা/হোল্ডিং: ${presentHomeOrHoldingNo}, গ্রাম/রাস্তা: ${presentAdditionalVillageOrRoad}, পোস্ট
-
-অফিস: ${presentPostOffice},  উপজেলা: ${presentUpozila}, জেলা:${presentDistrict}
-, বিভাগ: ${presentDivision}`}
+            {presentAddress.fullAddress}
           </div>
 
           <div className="absolute left-[37%] top-[84.7%] text-[18px] text-black font-bold">
@@ -305,10 +294,7 @@ const Nid = () => {
             id="permanent_addr"
             className="absolute left-[37%] top-[87%] w-[48%] text-[16px] text-black"
           >
-            {`বাসা/হোল্ডিং: ${permanentHomeOrHoldingNo}, গ্রাম/রাস্তা: ${permanentAdditionalVillageOrRoad}, পোস্ট
-
-অফিস: ${permanentPostOffice},  উপজেলা: ${permanentUpozila}, জেলা:${permanentDistrict}
-, বিভাগ: ${permanentDivision}`}
+            {permanentAddress.fullAddress}
           </div>
           <div className="absolute top-[93.5%] w-full text-center text-[14px] text-black">
             This is Software Generated Report From Bangladesh Election
@@ -319,15 +305,15 @@ const Nid = () => {
             সাথে সরাসরি সম্পর্কযুক্ত নয়।
           </div>
 
-          <div className="absolute left-[22%] top-[25.7%] text-[12px] text-black">
+          <div className="absolute left-[20%] top-[25.7%] text-[12px] text-black">
             <img
               id="photo"
-              src={secondData.data.photo}
+              src={photo}
               alt="User"
               className="w-[100px] h-[100px] inset-1 rounded-md ml-3"
             />
             <p className="text-center my-3 text-[18px] font-semibold">
-              {nameEnglish}
+              {nameEn}
             </p>
             <img
               className="mx-auto mt-[-7px]"

@@ -25,7 +25,7 @@ const Logins = () => {
     const { email, password } = data;
     handleLogin(email, password)
       .then((result) => {
-        navigate("/dashboard/create-nid");
+        navigate("/dashboard/server-copy-unofficial");
         console.log(result);
       })
       .catch((err) => {

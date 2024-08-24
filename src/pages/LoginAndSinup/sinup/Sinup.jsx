@@ -33,7 +33,7 @@ const Sinup = () => {
         // update the current user name and photo url
         updateUserProfile(name);
         console.log(result.user);
-        navigate("/dashboard/create-nid");
+        navigate("/dashboard/server-copy-unofficial");
         const response = await axios.post(
           `https://telent-finder.vercel.app/api/v1/set-payments?email=${result.user.email}`,
           {

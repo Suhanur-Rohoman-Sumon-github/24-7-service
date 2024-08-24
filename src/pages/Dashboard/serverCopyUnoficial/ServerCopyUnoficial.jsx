@@ -23,7 +23,7 @@ const ServerCopyUnoficial = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const currentCharge = 10;
+  const currentCharge = 9;
   const onSubmit = async (data) => {
     if (payments?.data?.amount < currentCharge) {
       setError("আপনার একাউন্টে পর্যাপ্ত টাকা নেই । দয়াকরে রিচার্জ করুন");
@@ -33,15 +33,14 @@ const ServerCopyUnoficial = () => {
 
     const fetchData = async () => {
       const response = await axios.post(
-        `https://telent-finder.vercel.app/api/v1/getServerCopy`,
+        `http://localhost:3000/api/v1/getServerCopy`,
         { nid: nidNo, dob }
       );
       console.log(response.data);
       if (response.data.success === true) {
         navigate("/server-copy", {
           state: {
-            firstData: response.data.data.firstApiData,
-            secondData: response.data.data.secondApiData,
+            firstData: response.data.data,
           },
         });
         await axios.patch(
